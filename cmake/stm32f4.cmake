@@ -106,6 +106,12 @@ set(STM32F405_COMPILE_DEFINITIONS
     MCU_FLASH_SIZE=1024
 )
 
+set(STM32F407_COMPILE_DEFINITIONS
+    STM32F40_41xxx
+    STM32F407xx
+    MCU_FLASH_SIZE=1024
+)
+
 function(target_stm32f405xg name)
     target_stm32f4xx(
         NAME ${name}
@@ -114,6 +120,19 @@ function(target_stm32f405xg name)
         COMPILE_DEFINITIONS ${STM32F405_COMPILE_DEFINITIONS}
         LINKER_SCRIPT stm32_flash_f405xg
         SVD STM32F405
+        BOOTLOADER
+        ${ARGN}
+    )
+endfunction()
+
+function(target_stm32f407xg name)
+    target_stm32f4xx(
+        NAME ${name}
+        STARTUP startup_stm32f40xx.s
+        SOURCES ${STM32F4_STDPERIPH_SRC}
+        COMPILE_DEFINITIONS ${STM32F407_COMPILE_DEFINITIONS}
+        LINKER_SCRIPT stm32_flash_f407xg
+        SVD STM32F407
         BOOTLOADER
         ${ARGN}
     )
